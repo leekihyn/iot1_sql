@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="${rootPath}/main.jsp">HOME</a>
+          <a class="navbar-brand" href="${rootPath}/main.jsp">홈</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -18,7 +18,7 @@
             <li><a href="/role/role_select.jsp">권한정보가기</a></li>
             <li><a href="/user/logout">로그아웃</a></li>
           </ul>
-          
+           
         </div><!--/.nav-collapse -->
       </div>
     </nav>

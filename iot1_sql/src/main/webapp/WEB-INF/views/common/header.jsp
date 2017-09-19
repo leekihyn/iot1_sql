@@ -97,7 +97,7 @@ var AjaxUtil = function (url, params, type, dataType){
 			data[key] = $("#" + key).val();
 		}
 		return  JSON.stringify(data);
-	} 
+	}
 	this.type = type?type:"POST";
 	this.dataType = dataType?dataType:"json";
 	this.param = generateJSON(params);

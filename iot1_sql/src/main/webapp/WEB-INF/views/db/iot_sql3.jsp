@@ -54,7 +54,7 @@ function callbackForTreeItem(result){
 		var database = result.databaseList[i];
 		treeview.append({
 			database: database.database
-        }, treeview.select());
+        }, treeview.select()); 
 	}
 	$("#btnConnect").text("접속해제");
 }

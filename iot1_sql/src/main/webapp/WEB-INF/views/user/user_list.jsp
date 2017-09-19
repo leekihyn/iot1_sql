@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-회원가입페이지입니다.
+유저리스트입니다.
 </body>
 </html>

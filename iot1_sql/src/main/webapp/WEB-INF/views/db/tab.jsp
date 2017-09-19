@@ -9,35 +9,18 @@
 		<kendo:tabStrip-item text="테이블정보" selected="true">
 			<kendo:tabStrip-item-content>
 				<div class="weather">
+
 					<kendo:grid title="테이블정보" name="tableInfoGrid" sortable="true"
-					pageable="false" navigatable="true">  
+						scrollable="true" pageable="false" navigatable="true">
 						<kendo:grid-excel fileName="테이블정보.xlsx" allPages="true"
 							filterable="true" proxyURL="${eUrl}" />
 						<kendo:grid-columns>
-							<kendo:grid-column title="컬럼명" field="columnName" />	 //테이블정보 이름부분임
+							<kendo:grid-column title="컬럼명" field="columnName" />
 							<kendo:grid-column title="데이터타입" field="dataType" />
 							<kendo:grid-column title="길이" field="characterMaximumLength" />
-							<kendo:grid-column title="널허용여부" field="isNullable"> 
-							</kendo:grid-column> 
-						</kendo:grid-columns>    
-						<kendo:dataSource >
-							<kendo:dataSource-transport>
-								<kendo:dataSource-transport-read url="${rUrl}" dataType="json" type="POST" 
-				 			contentType="application/json" />   
-								<kendo:dataSource-transport-parameterMap> 
-									<script> 
-					                	function parameterMap(options) {  
-					                		return JSON.stringify(options);
-					                	}  
-				                	</script>
-								</kendo:dataSource-transport-parameterMap>
-							</kendo:dataSource-transport>
-							<kendo:dataSource-schema>
-								<kendo:dataSource-schema-model id="columnName">
-								</kendo:dataSource-schema-model>
-							</kendo:dataSource-schema>
-						</kendo:dataSource>
-						
+							<kendo:grid-column title="널허용여부" field="isNullable">
+							</kendo:grid-column>
+						</kendo:grid-columns>
 					</kendo:grid>
 				</div>
 			</kendo:tabStrip-item-content>
@@ -45,10 +28,12 @@
 		<kendo:tabStrip-item text="쿼리">
 			<kendo:tabStrip-item-content>
 				<div class="weather">
-					<h2>
-						29<span>&ordm;C</span>
-					</h2>
-					<p>Sunny weather in New York.</p>
+					<kendo:toolBar name="queryToolbar">
+						<kendo:toolBar-items>
+							<kendo:toolBar-item type="button" text="실행" id="btnRun" click="toolbarEvent"/>
+						</kendo:toolBar-items>
+					</kendo:toolBar>
+					<textarea id="query"></textarea>
 				</div>
 			</kendo:tabStrip-item-content>
 		</kendo:tabStrip-item>
@@ -67,7 +52,7 @@
 }
 
 .weather {
-	margin: 0 auto 30px;
+	margin: 0 0 0 0;
 	text-align: center;
 }
 
