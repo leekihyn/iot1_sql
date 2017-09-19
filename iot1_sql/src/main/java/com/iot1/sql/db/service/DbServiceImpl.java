@@ -9,23 +9,22 @@ import org.springframework.stereotype.Service;
 import com.iot1.sql.db.dao.DbDAO;
 import com.iot1.sql.db.dto.Column;
 import com.iot1.sql.db.dto.DataBase;
+import com.iot1.sql.db.dto.DbInfo;
 import com.iot1.sql.db.dto.Table;
-import com.iot1.sql.db.dto.db_info;
-
 
 @Service
 public class DbServiceImpl implements DbService{
 
-	@Autowired 
-	DbDAO dDao; 
+	@Autowired
+	DbDAO dDao;
 	
 	@Override
-	public List<db_info> getDbInfoList(db_info di) {
+	public List<DbInfo> getDbInfoList(DbInfo di) {
 		return dDao.selectDbInfoList(di);
 	}
 	
-	public boolean isConnecteDB(db_info pDi) throws Exception{
-		db_info di = dDao.selectDbInfo(pDi);
+	public boolean isConnecteDB(DbInfo pDi) throws Exception{
+		DbInfo di = dDao.selectDbInfo(pDi);
 		return dDao.isConnecteDB(di);
 	}
 	
@@ -35,18 +34,18 @@ public class DbServiceImpl implements DbService{
 
 	@Override
 	public List<Table> getTableList(DataBase di) throws Exception {
+		// TODO Auto-generated method stub
 		return dDao.selectTableList(di);
 	}
 
 	@Override
 	public List<Column> getTableInfo(Table table) throws Exception {
-		// TODO Auto-generated method stub 
+		// TODO Auto-generated method stub
 		return dDao.selectTableInfo(table);
 	}
 
 	@Override
 	public Map<String, Object> runSql(Map<String, String> pm) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dDao.runSql(pm);
 	}
 }

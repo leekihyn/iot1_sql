@@ -2,14 +2,14 @@ package com.iot1.sql.db.dto;
 
 public class Column {
 
-	private String columnName; 
-	private String dataType; 
+	private String columnName;
+	private String dataType;
 	private String characterMaximumLength;
-	private String isNullable; 
+	private String isNullable;
 	public String getColumnName() {
-		return columnName; 
+		return columnName;
 	}
-	public void setColumnName(String columnName) { 
+	public void setColumnName(String columnName) {
 		this.columnName = columnName;
 	}
 	public String getDataType() {
@@ -28,7 +28,7 @@ public class Column {
 		return isNullable;
 	}
 	public void setIsNullable(String isNullable) {
-		this.isNullable = isNullable; 
+		this.isNullable = isNullable;
 	}
 	@Override
 	public String toString() {

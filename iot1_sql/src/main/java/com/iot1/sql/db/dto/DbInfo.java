@@ -3,7 +3,7 @@ package com.iot1.sql.db.dto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class db_info {
+public class DbInfo {
 	private int diNum;
 	private int uiNum;
 	private String dbTitle;
@@ -69,8 +69,7 @@ public class db_info {
 	}
 	@Override
 	public String toString() {
-		return "db_info [diNum=" + diNum + ", uiNum=" + uiNum + ", dbTitle=" + dbTitle + ", dbUrl=" + dbUrl + ", dbms="
+		return "DbInfo [diNum=" + diNum + ", uiNum=" + uiNum + ", dbTitle=" + dbTitle + ", dbUrl=" + dbUrl + ", dbms="
 				+ dbms + ", id=" + id + ", pwd=" + pwd + ", port=" + port + ", driverName=" + driverName + "]";
 	}
-	 
 }

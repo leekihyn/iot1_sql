@@ -8,11 +8,11 @@
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations"> 
+		<property name="locations">
 			<list>
-				<value>classpath:/db/db.properties</value>  
+				<value>classpath:/db/db.properties</value>
 			</list>
-		</property> 
+		</property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -31,24 +31,24 @@
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
-	
+
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />
 		<property name="logFormatter">
 			<ref bean="customForm"/>
 		</property>
 	</bean>
-	
+
 	<bean id="customForm" class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
 		<property name="loggingType" value="MULTI_LINE"/>
 	</bean>
 	<aop:config proxy-target-class="true">
 		<aop:pointcut id="txAdvisePointCut"
-			expression="execution(* com.iot1.sql..service.*Service.*(..))" />
+			expression="execution(* com.iot1sql.lecture..service.*Service.*(..))" />
 		<aop:advisor id="transactionAdvisor" pointcut-ref="txAdvisePointCut"
 			advice-ref="txAdvice" />
 	</aop:config>
-	
+
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
@@ -57,13 +57,14 @@
 			<tx:method name="save*" propagation="REQUIRED" />
 			<tx:method name="*" propagation="REQUIRED" />
 		</tx:attributes>
-	</tx:advice>  
-	
-	<tx:annotation-driven proxy-target-class="true" transaction-manager="txManager"/>
+	</tx:advice>
+
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="txManager" />
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 </beans>

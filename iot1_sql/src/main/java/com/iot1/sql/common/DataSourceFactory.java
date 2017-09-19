@@ -3,19 +3,18 @@ package com.iot1.sql.common;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 
-import com.iot1.sql.db.dto.db_info;
- 
+import com.iot1.sql.db.dto.DbInfo;
 
-@Configuration
+@Service
 public class DataSourceFactory{
 	BasicDataSource bds;
 	SqlSessionFactoryBean ssf ;
-	SqlSession ss; 
-	 
-	private void setDataSource(db_info db){
+	SqlSession ss;
+	
+	private void setDataSource(DbInfo db){
 		bds = new BasicDataSource();
 		bds.setDriverClassName(db.getDriverName());
 		bds.setUrl(db.getDbUrl()+":" + db.getPort() + "/" + db.getDbms());
@@ -41,10 +40,10 @@ public class DataSourceFactory{
 		closeSession();
 		ss = getSsf().getObject().openSession();
 		return ss;
-	} 
+	}
 
 
-	public boolean isConnecteDB(db_info db) throws Exception {
+	public boolean isConnecteDB(DbInfo db) throws Exception {
 		setDataSource(db);
 		ss = getSession();
 		return true;

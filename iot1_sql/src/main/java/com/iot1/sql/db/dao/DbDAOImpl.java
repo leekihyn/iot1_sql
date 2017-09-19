@@ -16,27 +16,27 @@ import org.springframework.stereotype.Repository;
 import com.iot1.sql.common.DataSourceFactory;
 import com.iot1.sql.db.dto.Column;
 import com.iot1.sql.db.dto.DataBase;
+import com.iot1.sql.db.dto.DbInfo;
 import com.iot1.sql.db.dto.Table;
-import com.iot1.sql.db.dto.db_info;
 
-@Repository 
+@Repository
 public class DbDAOImpl extends SqlSessionDaoSupport implements DbDAO {
 	@Autowired
-	DataSourceFactory dsf;  
+	DataSourceFactory dsf;
 
 	@Override
-	public List<db_info> selectDbInfoList(db_info di) {
+	public List<DbInfo> selectDbInfoList(DbInfo di) {
 		return this.getSqlSession().selectList("db.SELECT_DB", di);
-	}  
+	}
 
 	@Override
-	public db_info selectDbInfo(db_info di) {
-		return this.getSqlSession().selectOne("db.SELECT_DB", di);  
-	} 
+	public DbInfo selectDbInfo(DbInfo di) {
+		return this.getSqlSession().selectOne("db.SELECT_DB", di);
+	}
 
 	@Override
-	public boolean isConnecteDB(db_info di) throws Exception {
-		return dsf.isConnecteDB(di); 
+	public boolean isConnecteDB(DbInfo di) throws Exception {
+		return dsf.isConnecteDB(di);
 	}
 
 	public List<DataBase> selectDatabaseList() throws Exception {
@@ -44,32 +44,32 @@ public class DbDAOImpl extends SqlSessionDaoSupport implements DbDAO {
 		ResultSet ctlgs = meta.getCatalogs();		
 		List<DataBase> databaseList = new ArrayList<DataBase>();
 		while (ctlgs.next())
-		{ 
+		{
 			DataBase db = new DataBase();
 			db.setDatabase(ctlgs.getString(1));
-			databaseList.add(db); 
+			databaseList.add(db);
 		}
 		return databaseList;
 	}
 	//TABLE_SELECT
-		public List<Table> selectTableList(DataBase di) throws Exception{
-			dsf.getSqlSession().selectList("db.USE_DATABASE",di);
-			return dsf.getSqlSession().selectList("db.TABLE_SELECT",di);
-		} 
+	public List<Table> selectTableList(DataBase di) throws Exception{
+		dsf.getSqlSession().selectList("db.USE_DATABASE",di);
+		return dsf.getSqlSession().selectList("db.TABLE_SELECT",di);
+	}
 
 	@Override
 	public List<Column> selectTableInfo(Table table) throws Exception {
-		return dsf.getSqlSession().selectList("db.TABLE_INFO_SELECT", table);
+		return dsf.getSqlSession().selectList("db.TABLE_INFO_SELECT",table);
 	}
 
 	@Override
 
-	public Map<String, Object> runSql(Map<String, String> pm) throws Exception {
+	public Map<String,Object> runSql(Map<String, String> pm) throws Exception{
 		String sql = pm.get("sql");
-		sql = sql.trim();
-		Map<String, Object> map = new HashMap<String, Object>();
+		sql = sql.trim();			
+		Map<String,Object> map = new HashMap<String,Object>();
 		Statement statement = dsf.getSqlSession().getConnection().createStatement();
-		if (sql.indexOf("select") == 0) {
+		if(sql.indexOf("select")==0){
 			ResultSet resultSet = statement.executeQuery(sql);
 			ResultSetMetaData metadata = resultSet.getMetaData();
 			int columnCount = metadata.getColumnCount();
@@ -78,22 +78,23 @@ public class DbDAOImpl extends SqlSessionDaoSupport implements DbDAO {
 				String columnName = metadata.getColumnName(i);
 				columns.add(columnName);
 			}
-			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-			while (resultSet.next()) {
-				Map<String, String> hm = new HashMap<String, String>();
-				for (String column : columns) {
+			List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+			while(resultSet.next()){
+				Map<String,String> hm = new HashMap<String,String>();
+				for(String column : columns){
 					hm.put(column, resultSet.getString(column));
 				}
 				list.add(hm);
-			} 
+			}
 			map.put("type", "select");
-			map.put("list", "list");
-			map.put("columns", "columns");
-		} else {
+			map.put("list", list);
+			map.put("columns", columns);
+		}else{
 			int result = statement.executeUpdate(sql);
 			map.put("type", "save");
-			map.put("row", "result");
+			map.put("row", result);
 		}
 		return map;
 	}
+
 }

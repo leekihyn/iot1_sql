@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataBase{
 	private String database;
-	private String table_name;
+	private String tableName;
 
 	public String getTableName() {
-		return table_name;
+		return tableName;
 	}
 
 	public void setTableName(String tableName) {
-		this.table_name = tableName;
+		this.tableName = tableName;
 	}
- 
+
 	public String getDatabase() {
 		return database;
 	}
@@ -24,7 +24,7 @@ public class DataBase{
 	}
 
 	@Override
-	public String toString() { 
-		return "DataBase [database=" + database + ", tableName=" + table_name + "]";
+	public String toString() {
+		return "DataBase [database=" + database + ", tableName=" + tableName + "]";
 	}
 }

@@ -12,23 +12,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iot1.sql.db.dto.DataBase;
+import com.iot1.sql.db.dto.DbInfo;
 import com.iot1.sql.db.dto.Table;
-import com.iot1.sql.db.dto.db_info;
 import com.iot1.sql.db.service.DbService;
 
-@Controller
+
+@Controller 
 public class DbController {
 	@Autowired
 	DbService ds;
-	 
+	
 	@RequestMapping(value="/db/list/tree",method=RequestMethod.POST)
-	public @ResponseBody List<db_info> getGoodsInfoList(@RequestBody db_info di){ 
-		return ds.getDbInfoList(di); 
-	} 
-  
+	public @ResponseBody List<DbInfo> getGoodsInfoList(@RequestBody DbInfo di){
+		return ds.getDbInfoList(di);
+	}
+
 	
 	@RequestMapping(value="/db/connecte",method=RequestMethod.POST)
-	public @ResponseBody ModelMap getConnectDB(@RequestBody db_info di, ModelMap map){
+	public @ResponseBody ModelMap getConnectDB(@RequestBody DbInfo di, ModelMap map){
 		try{
 			if(ds.isConnecteDB(di)){
 				map.put("databaseList", ds.getDataBaseList());
@@ -49,7 +50,7 @@ public class DbController {
 			map.put("error", e.getMessage());
 		}
 		return map;
-	} 
+	}
 	@RequestMapping(value="/db/table/info",method=RequestMethod.POST)
 	public @ResponseBody ModelMap getTableInfo(@RequestBody Table table, ModelMap map){
 		try{
@@ -58,14 +59,14 @@ public class DbController {
 		}catch(Exception e){
 			map.put("error", e.getMessage());
 		}
-		return map; 
+		return map;
 	}
 	@RequestMapping(value="/db/run/sql",method=RequestMethod.POST)
 	public @ResponseBody ModelMap getSqlResult(@RequestBody Map<String,String> pm, ModelMap map){
 		try{
 			map.put("resultMap", ds.runSql(pm));
-			map.put("key", "resultMap"); 
-		}catch(Exception e){ 
+			map.put("key", "resultMap");
+		}catch(Exception e){
 			map.put("error", e.getMessage());
 		}
 		return map;
